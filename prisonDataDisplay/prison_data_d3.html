@@ -19,12 +19,11 @@
 <body>
 <script>
 
-  var margin = {top: 30, right: 30, bottom: 30, left: 30};
+  var margin = {top: 30, right: 30, bottom: 40, left: 30};
 
   var h = 300 - margin.top - margin.bottom;
   var w = 600 - margin.left - margin.right;
   var barPadding = 2;
-  var padding = 30;
 
   var svg = d3.select("body").append("svg")
               .attr("width", w + margin.left + margin.right)
@@ -43,8 +42,6 @@
         avg_age: Math.round(d3.mean(v, function(d) { return d.age; }))
       }; })
       .entries(prison_data);
-  console.log(dataByGroup);
-  console.log(dataByGroup.length);
 
   var xScale = d3.scale.ordinal()
                  .domain(dataByGroup.map(function(d) { return d.key; }))
@@ -62,8 +59,7 @@
 
   var xAxis = d3.svg.axis()
                 .scale(xScale)
-                .orient("bottom")
-                .ticks(5);
+                .orient("bottom");
 
   var yAxisLeft = d3.svg.axis()
                 .scale(yScaleAge)
@@ -83,7 +79,7 @@
                 .enter()
                 .append("circle");
 
-  var barWidth = w / dataByGroup.length - 2*barPadding;
+  var barWidth = w / dataByGroup.length - barPadding;
 
   bars.attr("height", function(d) {return h - yScaleCount(d.values.count) } )
       // .attr("width", 20)
@@ -115,13 +111,22 @@
 
   svg.append("g")
      .attr("class", "axis")
-     // .attr ("transform", "translate(" + padding + ",0)")
      .call(yAxisLeft)
     .append("text")
      .attr("transform", "rotate(-90)")
      .attr("y", 10)
      .style("text-anchor", "end")
      .text("Average Age")
+
+  svg.append("g")
+     .attr("class", "axis")
+     .attr ("transform", "translate(" + w  + ",0)")
+     .call(yAxisRight)
+    .append("text")
+     .attr("transform", "rotate(-90)")
+     .attr("y", -4)
+     .style("text-anchor", "end")
+     .text("Count")
 
 
 </script>
