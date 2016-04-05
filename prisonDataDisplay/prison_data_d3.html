@@ -88,9 +88,9 @@
       .attr("x", function (d,i){
         // return (i * 30)
         return xScale(d.key) })
-      .attr("fill", "red")
-      // .attr("fill", function (d) {
-      //   return "rgb(0, 0, " + (d.values.count * 10) + ")"; });
+      // .attr("fill", "red")
+      .attr("fill", function (d) {
+        return "rgb(" + (d.values.count * 10) + ", 0, 0)"; });
 
   points.attr("cx", function (d,i) { 
         return (i * (w / dataByGroup.length)) + ((w / dataByGroup.length - barPadding) / 2) })
